@@ -123,7 +123,7 @@ z-index:2;
 box-shadow:0 0 8px rgba(255,255,255,0.3);
 }
 
-/* Discord Status */
+/* Discord Status - NUR Farben */
 .discord-status{
 display:flex;
 align-items:center;
@@ -144,26 +144,20 @@ border-radius:50%;
 flex-shrink:0;
 }
 
-.status-dot.online{background:#43b581;}
-.status-dot.idle{background:#faa61a;}
-.status-dot.dnd{background:#f04747;}
+.status-dot.online{background:#43b581;box-shadow:0 0 10px #43b581;}
+.status-dot.idle{background:#faa61a;box-shadow:0 0 10px #faa61a;}
+.status-dot.dnd{background:#f04747;box-shadow:0 0 10px #f04747;}
 .status-dot.offline{background:#747f8d;}
 
 .discord-activity{
 font-size:13px;
-color:#aaa;
+color:#ccc;
 margin-top:4px;
-padding:4px 12px;
-border-radius:10px;
-background:rgba(255,255,255,.03);
-}
-
-.activity-icon{
-width:24px;
-height:24px;
-border-radius:6px;
-vertical-align:middle;
-margin-right:6px;
+padding:8px 14px;
+border-radius:12px;
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.06);
+line-height:1.5;
 }
 
 .btn{
@@ -234,7 +228,6 @@ border-radius:3px;
 <div id="stars"></div>
 <div id="cursor-glow"></div>
 
-<!-- ENTER BEREICH -->
 <div id="enter">
 <h1>CLICK TO ENTER</h1>
 <p>sound on recommended</p>
@@ -244,7 +237,6 @@ border-radius:3px;
 <source src="music.mp3" type="audio/mpeg">
 </audio>
 
-<!-- MUSIK BUTTON – oben links -->
 <button id="musicBtn">
 <img id="musicIcon" src="https://cdn.discordapp.com/attachments/1506318533217226752/1519615974465343488/lautsprecher.png?ex=6a3e3429&is=6a3ce2a9&hm=c1937dd4ef02deddffdc477c4d1c2ef4d6c5f9ce6c55fa8a50dfb885566c9c45&">
 </button>
@@ -252,20 +244,21 @@ border-radius:3px;
 <div id="main">
 <h1 class="logo">COMBOSS FRIEND GROUP</h1>
 
-<!-- FAYYSI Card -->
-<div class="card">
+<!-- ============================================ -->
+
+<!-- ============================================ -->
+<div class="card" data-userid="629800496479076352">
 <div class="avatar-wrapper">
-<img class="avatar" id="fayysi-avatar" src="https://cdn.discordapp.com/attachments/1506318533217226752/1519487604423262309/458ab107ae9770e16a9d3aca2e09bb6b_1.jpg?ex=6a3dbc9b&is=6a3c6b1b&hm=9ecc1040e809ecd93aa4d619417f24c1441b3c1dd244015fa6fa8b661b6bfb43&">
+<img class="avatar" id="avatar-629800496479076352" src="https://cdn.discordapp.com/attachments/1506318533217226752/1519487604423262309/458ab107ae9770e16a9d3aca2e09bb6b_1.jpg?ex=6a3dbc9b&is=6a3c6b1b&hm=9ecc1040e809ecd93aa4d619417f24c1441b3c1dd244015fa6fa8b661b6bfb43&">
 <div class="founder-badge">FOUNDER</div>
 </div>
 <h2>FAYYSI</h2>
 
-<!-- Discord Status Bereich für FAYYSI -->
-<div id="fayysi-status" class="discord-status">
-<div class="status-dot offline"></div>
-<span id="fayysi-status-text">Status wird geladen...</span>
+<div class="discord-status" id="status-629800496479076352">
+<div class="status-dot offline" id="dot-629800496479076352"></div>
+<span id="text-629800496479076352">Lade Status...</span>
 </div>
-<div id="fayysi-activity" class="discord-activity" style="display:none;"></div>
+<div class="discord-activity" id="activity-629800496479076352" style="display:none;"></div>
 
 <button class="btn" onclick="copyText('68rz')">
 <img class="icon" src="https://cdn.discordapp.com/attachments/1506318533217226752/1519486310283214914/logo.png?ex=6a3dbb67&is=6a3c69e7&hm=91663aaf63084ac9b8e32a4632362c44ba7115b8bf116a897e4a88f107e682e1&">
@@ -277,12 +270,15 @@ Roblox: Fayysi
 </button>
 </div>
 
-<!-- LAYYSI Card -->
+<!-- ============================================ -->
+
+<!-- ============================================ -->
 <div class="card">
 <h2>LAYYSI</h2>
 <p>sklave</p>
 <p>Später hinzufügen</p>
 </div>
+
 </div>
 
 <script>
@@ -292,14 +288,12 @@ const music=document.getElementById("music");
 const musicBtn=document.getElementById("musicBtn");
 const musicIcon=document.getElementById("musicIcon");
 
-// Maus-Glow
 document.addEventListener("mousemove",(e)=>{
 const glow=document.getElementById("cursor-glow");
 glow.style.left=e.clientX+"px";
 glow.style.top=e.clientY+"px";
 });
 
-// ENTER klicken
 enter.onclick=()=>{
 enter.style.display="none";
 main.style.display="block";
@@ -307,13 +301,11 @@ music.play();
 musicIcon.src="https://cdn.discordapp.com/attachments/1506318533217226752/1519616016361984120/lautsprecher_2.png?ex=6a3e3433&is=6a3ce2b3&hm=358d45588b016226dae272b94e373766b77c4631668fbeb1802659ff79ad8626&";
 };
 
-// Kopieren
 function copyText(text){
 navigator.clipboard.writeText(text);
 alert("Kopiert: "+text);
 }
 
-// Musik Button
 musicBtn.onclick=()=>{
 if(music.paused){
 music.play();
@@ -324,27 +316,30 @@ musicIcon.src="https://cdn.discordapp.com/attachments/1506318533217226752/151961
 }
 };
 
-// BILDER ANKLICKBAR
 document.addEventListener("click",(e)=>{
 if(e.target.classList.contains("avatar")){
 const src = e.target.src;
-if(src){
-window.open(src, "_blank");
-}
+if(src) window.open(src, "_blank");
 }
 });
 
-// ===== DISCORD PRESENCE MIT LANYARD =====
-const FAYYSI_DISCORD_ID = "629800496479076352";
+// ==========================================
+// DISCORD LIVE STATUS - NUR FARBEN
+// ==========================================
 
-function updateDiscordStatus(userId, statusEl, statusTextEl, activityEl, avatarEl) {
-const url = `https://api.lanyard.rest/v1/users/${userId}`;
+function updateUserStatus(userId) {
+const statusEl = document.getElementById(`status-${userId}`);
+const textEl = document.getElementById(`text-${userId}`);
+const activityEl = document.getElementById(`activity-${userId}`);
+const avatarEl = document.getElementById(`avatar-${userId}`);
 
-fetch(url)
-.then(res => res.json())
+if(!statusEl || !textEl || !activityEl) return;
+
+fetch(`https://api.lanyard.rest/v1/users/${userId}`)
+.then(r => r.json())
 .then(data => {
 if(!data.success) {
-statusTextEl.textContent = "Offline";
+textEl.textContent = "Unsichtbar";
 statusEl.querySelector(".status-dot").className = "status-dot offline";
 return;
 }
@@ -352,101 +347,114 @@ return;
 const d = data.data;
 const dot = statusEl.querySelector(".status-dot");
 
-// Status setzen
-let status = d.discord_status || "offline";
+// Farben statt Emojis!
+const status = d.discord_status || "offline";
 dot.className = "status-dot";
 if(status === "online") {
 dot.classList.add("online");
-statusTextEl.textContent = "🟢 Online";
+textEl.textContent = "Online";
 } else if(status === "idle") {
 dot.classList.add("idle");
-statusTextEl.textContent = "🌙 Idle";
+textEl.textContent = "Abwesend";
 } else if(status === "dnd") {
 dot.classList.add("dnd");
-statusTextEl.textContent = "⛔ Bitte nicht stören";
+textEl.textContent = "Bitte nicht stören";
 } else {
 dot.classList.add("offline");
-statusTextEl.textContent = "⚫ Offline";
+textEl.textContent = "Unsichtbar";
 }
 
-// Aktivitäten (Spiele / Musik)
+// Avatar vom Discord holen
+if(d.discord_user && d.discord_user.avatar) {
+const hash = d.discord_user.avatar;
+const ext = hash.startsWith("a_") ? "gif" : "png";
+const avatarUrl = `https://cdn.discordapp.com/avatars/${userId}/${hash}.${ext}?size=128`;
+if(avatarEl) avatarEl.src = avatarUrl;
+}
+
+// Aktivität
 const activities = d.activities || [];
-let foundActivity = null;
-
-// Nach der ersten nicht-custom Aktivität suchen
+let found = null;
 for(const act of activities) {
-if(act.type !== 4) { // type 4 = custom status
-foundActivity = act;
-break;
-}
+if(act.type !== 4) { found = act; break; }
 }
 
-if(foundActivity) {
-let activityHTML = "";
-
-if(foundActivity.type === 0) {
-// Spiel (Playing)
-const gameImg = foundActivity.assets && foundActivity.assets.large_image
-? `https://cdn.discordapp.com/app-assets/${foundActivity.application_id}/${foundActivity.assets.large_image}.png`
-: null;
-activityHTML = "🎮 Spielt: <strong>" + foundActivity.name + "</strong>";
-if(foundActivity.details) {
-activityHTML += "<br><span style='font-size:12px;color:#888;'>" + foundActivity.details + "</span>";
-}
-} else if(foundActivity.type === 2) {
-// Musik (Listening)
-const songImg = foundActivity.assets && foundActivity.assets.large_image
-? `https://cdn.discordapp.com/app-assets/${foundActivity.application_id}/${foundActivity.assets.large_image}.png`
-: null;
-const songName = foundActivity.details || "Unbekannter Song";
-const artist = foundActivity.state || "Unbekannter Künstler";
-activityHTML = "🎵 Hört: <strong>" + songName + "</strong><br><span style='font-size:12px;color:#888;'>von " + artist + "</span>";
-} else if(foundActivity.type === 3) {
-// Watching
-activityHTML = "📺 Schaut: <strong>" + foundActivity.name + "</strong>";
-} else if(foundActivity.type === 5) {
-// Custom Status
-activityHTML = "💬 " + (foundActivity.state || "");
+if(found) {
+let html = "";
+if(found.type === 0) {
+html = `Spielt: ${found.name}`;
+if(found.details) html += `<br><span style="font-size:12px;color:#999;">${found.details}</span>`;
+if(found.state) html += `<br><span style="font-size:12px;color:#999;">${found.state}</span>`;
+} else if(found.type === 2) {
+const song = found.details || "Unbekannt";
+const artist = found.state || "Unbekannt";
+html = `Hört: ${song}<br><span style="font-size:12px;color:#999;">von ${artist}</span>`;
+} else if(found.type === 3) {
+html = `Schaut: ${found.name}`;
 } else {
-activityHTML = "🎮 " + foundActivity.name;
+html = found.name;
 }
-
-activityEl.innerHTML = activityHTML;
+activityEl.innerHTML = html;
 activityEl.style.display = "block";
 } else {
 activityEl.style.display = "none";
 }
-
-// Avatar von Discord API holen (wenn verfügbar)
-if(d.discord_user && d.discord_user.avatar) {
-const userId = d.discord_user.id;
-const avatarHash = d.discord_user.avatar;
-const isAnimated = avatarHash.startsWith("a_");
-const ext = isAnimated ? "gif" : "png";
-const avatarUrl = `https://cdn.discordapp.com/avatars/${userId}/${avatarHash}.${ext}?size=128`;
-if(avatarEl) {
-avatarEl.src = avatarUrl;
-}
-}
 })
-.catch(err => {
-console.error("Lanyard Fehler:", err);
-statusTextEl.textContent = "Offline";
+.catch(() => {
+textEl.textContent = "Unsichtbar";
+statusEl.querySelector(".status-dot").className = "status-dot offline";
 });
 }
 
-// Beim Laden direkt ausführen
-const fayysiStatus = document.getElementById("fayysi-status");
-const fayysiStatusText = document.getElementById("fayysi-status-text");
-const fayysiActivity = document.getElementById("fayysi-activity");
-const fayysiAvatar = document.getElementById("fayysi-avatar");
+// ==========================================
+// USER IDS HIER EINTRAGEN
+// ==========================================
+// Damit der Status läuft, musst du die IDs hier eintragen:
+// -> "629800496479076352" ist FAYYSI
+// -> Für neue Leute: einfach eine Zeile kopieren und ID ändern
+// ==========================================
 
-updateDiscordStatus(FAYYSI_DISCORD_ID, fayysiStatus, fayysiStatusText, fayysiActivity, fayysiAvatar);
+const USER_IDS = [
+"629800496479076352"
+];
 
-// Alle 30 Sekunden aktualisieren
+// Alle User einmal laden
+USER_IDS.forEach(id => updateUserStatus(id));
+
+// Alle 30 Sekunden updaten
 setInterval(() => {
-updateDiscordStatus(FAYYSI_DISCORD_ID, fayysiStatus, fayysiStatusText, fayysiActivity, fayysiAvatar);
+USER_IDS.forEach(id => updateUserStatus(id));
 }, 30000);
 </script>
+
+<!-- ============================================ -->
+// VORLAGE NEUE LEUTE HINZUFÜGEN:
+//
+// 1. DIESEN BLOCK KOPIEREN (irgendwo zwischen <div id="main"> und </div>):
+//
+// <div class="card" data-userid="DISCODE_ID">
+//   <div class="avatar-wrapper">
+//     <img class="avatar" id="avatar-DISCODE_ID" src="PROFILBILD_URL">
+//   </div>
+//   <h2>NAME</h2>
+//   <div class="discord-status" id="status-DISCODE_ID">
+//     <div class="status-dot offline" id="dot-DISCODE_ID"></div>
+//     <span id="text-DISCODE_ID">Lade Status...</span>
+//   </div>
+//   <div class="discord-activity" id="activity-DISCODE_ID" style="display:none;"></div>
+//   <button class="btn" onclick="copyText('TAG')">
+//     <img class="icon" src="ICON_URL"> Discord: TAG
+//   </button>
+// </div>
+//
+// 2. IM JAVASCRIPT: Die ID ins Array packen:
+//    const USER_IDS = [
+//      "629800496479076352",
+//      "NEUE_ID_HIER"   // <-- hier neue ID hinzufügen
+//    ];
+//
+// 3. Fertig! Status läuft automatisch.
+// ============================================ -->
+
 </body>
 </html>
