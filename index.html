@@ -13,19 +13,31 @@ color:#fff;
 overflow:hidden;
 }
 
-#stars{
+/* ===== SCHNEE FLAKES ===== */
+#snow-container{
 position:fixed;
+top:0;
+left:0;
 width:100%;
 height:100%;
-background-image:radial-gradient(white 1px,transparent 1px);
-background-size:40px 40px;
-animation:stars 25s linear infinite;
-opacity:.4;
+pointer-events:none;
+z-index:1;
 }
 
-@keyframes stars{
-from{transform:translateY(0);}
-to{transform:translateY(-500px);}
+.snowflake{
+position:absolute;
+top:-10px;
+color:white;
+font-size:1.2em;
+opacity:0.6;
+animation:fall linear infinite;
+pointer-events:none;
+user-select:none;
+}
+
+@keyframes fall{
+0%{transform:translateY(-30px) rotate(0deg); opacity:0.6;}
+100%{transform:translateY(110vh) rotate(360deg); opacity:0.2;}
 }
 
 #cursor-glow{
@@ -37,6 +49,7 @@ background:rgba(255,255,255,.08);
 filter:blur(60px);
 pointer-events:none;
 transform:translate(-50%,-50%);
+z-index:2;
 }
 
 #enter{
@@ -71,6 +84,8 @@ height:100vh;
 overflow:auto;
 padding:25px;
 text-align:center;
+position:relative;
+z-index:3;
 }
 
 .logo{
@@ -123,7 +138,7 @@ z-index:2;
 box-shadow:0 0 8px rgba(255,255,255,0.3);
 }
 
-/* Discord Status - NUR Farben */
+/* Discord Status */
 .discord-status{
 display:flex;
 align-items:center;
@@ -160,7 +175,8 @@ border:1px solid rgba(255,255,255,.06);
 line-height:1.5;
 }
 
-.btn{
+/* ===== SOCIAL BUTTONS (wie dein Beispiel) ===== */
+.social-btn{
 width:100%;
 padding:12px;
 margin-top:10px;
@@ -172,17 +188,27 @@ cursor:pointer;
 display:flex;
 align-items:center;
 justify-content:center;
-gap:10px;
+gap:8px;
+font-size:14px;
+transition:0.2s;
 }
 
-.btn:hover{
+.social-btn:hover{
 box-shadow:0 0 20px white;
 }
 
-.icon{
+.social-btn i{
+font-size:20px;
 width:22px;
-height:22px;
-border-radius:6px;
+text-align:center;
+}
+
+.social-btn .label{
+font-weight:bold;
+}
+
+.social-btn .handle{
+color:#aaa;
 }
 
 #musicBtn{
@@ -209,15 +235,13 @@ height:32px;
 border-radius:4px;
 }
 
-/* Scrollbar für Handy */
+/* Scrollbar */
 #main::-webkit-scrollbar{
 width:6px;
 }
-
 #main::-webkit-scrollbar-track{
 background:transparent;
 }
-
 #main::-webkit-scrollbar-thumb{
 background:rgba(255,255,255,.3);
 border-radius:3px;
@@ -225,7 +249,8 @@ border-radius:3px;
 </style>
 </head>
 <body>
-<div id="stars"></div>
+
+<div id="snow-container"></div>
 <div id="cursor-glow"></div>
 
 <div id="enter">
@@ -258,14 +283,16 @@ border-radius:3px;
 </div>
 <div class="discord-activity" id="activity-629800496479076352" style="display:none;"></div>
 
-<button class="btn" onclick="copyText('68rz')">
-<img class="icon" src="https://cdn.discordapp.com/attachments/1506318533217226752/1519692304879849582/discord-white-icon.webp?ex=6a3e7b40&is=6a3d29c0&hm=8f5ff5397739327dd786b813217da4ea023d014c228038db4cdfac59d59917b9&">
-Discord: 68rz
-</button>
-<button class="btn" onclick="copyText('Fayysi')">
-<img class="icon" src="https://cdn.discordapp.com/attachments/1506318533217226752/1519693248766152755/CITYPNG.COMHD_Roblox_White_Symbol_Sign_Icon_Logo_PNG_-_2000x2000.png?ex=6a3e7c21&is=6a3d2aa1&hm=ade79ec58de6b9b7302e5badeaac318d0a9c6f7ecdab4f485975552f17747d1f&">
-Roblox: Fayysi
-</button>
+<div class="social-btn" data-copy="68rz">
+<i class="fa-brands fa-discord"></i>
+<span class="label">Discord</span>
+<span class="handle">68rz</span>
+</div>
+<div class="social-btn" data-copy="Fayysi">
+<i class="fa-brands fa-roblox"></i>
+<span class="label">Roblox</span>
+<span class="handle">Fayysi</span>
+</div>
 </div>
 
 <!-- ========== LAYYSI ========== -->
@@ -281,30 +308,52 @@ Roblox: Fayysi
 </div>
 <div class="discord-activity" id="activity-1319734715858550835" style="display:none;"></div>
 
-<button class="btn" onclick="copyText('7e9p')">
-<img class="icon" src="https://cdn.discordapp.com/attachments/1506318533217226752/1519692304879849582/discord-white-icon.webp?ex=6a3e7b40&is=6a3d29c0&hm=8f5ff5397739327dd786b813217da4ea023d014c228038db4cdfac59d59917b9&">
-Discord: 7e9p
-</button>
-<button class="btn" onclick="copyText('')">
-<img class="icon" src="https://cdn.discordapp.com/attachments/1506318533217226752/1519693248766152755/CITYPNG.COMHD_Roblox_White_Symbol_Sign_Icon_Logo_PNG_-_2000x2000.png?ex=6a3e7c21&is=6a3d2aa1&hm=ade79ec58de6b9b7302e5badeaac318d0a9c6f7ecdab4f485975552f17747d1f&">
-Roblox: 
-</button>
+<div class="social-btn" data-copy="7e9p">
+<i class="fa-brands fa-discord"></i>
+<span class="label">Discord</span>
+<span class="handle">7e9p</span>
+</div>
+<div class="social-btn" data-copy="Layysi">
+<i class="fa-brands fa-roblox"></i>
+<span class="label">Roblox</span>
+<span class="handle">Layysi</span>
+</div>
 </div>
 
 </div><!-- /main -->
 
 <script>
-const enter=document.getElementById("enter");
-const main=document.getElementById("main");
-const music=document.getElementById("music");
-const musicBtn=document.getElementById("musicBtn");
-const musicIcon=document.getElementById("musicIcon");
+// ===== SCHNEE FLAKES =====
+function createSnowflakes(){
+const container = document.getElementById('snow-container');
+const flakes = ['❄','❅','❆','✦','•'];
+for(let i=0; i<80; i++){
+const flake = document.createElement('div');
+flake.className = 'snowflake';
+flake.textContent = flakes[Math.floor(Math.random()*flakes.length)];
+flake.style.left = Math.random()*100+'%';
+flake.style.fontSize = (Math.random()*1.5+0.5)+'em';
+flake.style.opacity = Math.random()*0.5+0.3;
+flake.style.animationDuration = (Math.random()*8+5)+'s';
+flake.style.animationDelay = (Math.random()*10)+'s';
+container.appendChild(flake);
+}
+}
+createSnowflakes();
 
+// ===== CURSOR GLOW =====
 document.addEventListener("mousemove",(e)=>{
 const glow=document.getElementById("cursor-glow");
 glow.style.left=e.clientX+"px";
 glow.style.top=e.clientY+"px";
 });
+
+// ===== ENTER SCREEN =====
+const enter=document.getElementById("enter");
+const main=document.getElementById("main");
+const music=document.getElementById("music");
+const musicBtn=document.getElementById("musicBtn");
+const musicIcon=document.getElementById("musicIcon");
 
 enter.onclick=()=>{
 enter.style.display="none";
@@ -313,11 +362,16 @@ music.play();
 musicIcon.src="https://cdn.discordapp.com/attachments/1506318533217226752/1519616016361984120/lautsprecher_2.png?ex=6a3e3433&is=6a3ce2b3&hm=358d45588b016226dae272b94e373766b77c4631668fbeb1802659ff79ad8626&";
 };
 
-function copyText(text){
-navigator.clipboard.writeText(text);
-alert("Kopiert: "+text);
+// ===== COPY TEXT (über data-copy Attribut) =====
+document.addEventListener("click",(e)=>{
+const btn = e.target.closest(".social-btn");
+if(btn && btn.dataset.copy){
+navigator.clipboard.writeText(btn.dataset.copy);
+alert("Kopiert: "+btn.dataset.copy);
 }
+});
 
+// ===== MUSIC TOGGLE =====
 musicBtn.onclick=()=>{
 if(music.paused){
 music.play();
@@ -328,6 +382,7 @@ musicIcon.src="https://cdn.discordapp.com/attachments/1506318533217226752/151961
 }
 };
 
+// ===== AVATAR ZOOM =====
 document.addEventListener("click",(e)=>{
 if(e.target.classList.contains("avatar")){
 const src = e.target.src;
@@ -335,10 +390,7 @@ if(src) window.open(src, "_blank");
 }
 });
 
-// ==========================================
-// DISCORD LIVE STATUS - NUR FARBEN
-// ==========================================
-
+// ===== DISCORD LIVE STATUS =====
 function updateUserStatus(userId) {
 const statusEl = document.getElementById(`status-${userId}`);
 const textEl = document.getElementById(`text-${userId}`);
@@ -415,14 +467,10 @@ statusEl.querySelector(".status-dot").className = "status-dot offline";
 });
 }
 
-// ==========================================
-// USER IDS HIER EINTRAGEN
-// ==========================================
 const USER_IDS = [
 "629800496479076352",
 "1319734715858550835"
 ];
-// ==========================================
 
 USER_IDS.forEach(id => updateUserStatus(id));
 
@@ -431,5 +479,7 @@ USER_IDS.forEach(id => updateUserStatus(id));
 }, 30000);
 </script>
 
+<!-- Font Awesome für Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </body>
 </html>
