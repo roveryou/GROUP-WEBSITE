@@ -77,6 +77,7 @@ text-align:center;
 font-size:42px;
 margin:20px 0;
 text-shadow:0 0 20px white;
+padding-left:60px;
 }
 
 .card{
@@ -88,8 +89,12 @@ border-radius:25px;
 background:rgba(255,255,255,.07);
 border:1px solid rgba(255,255,255,.15);
 backdrop-filter:blur(15px);
-transition:transform 0.15s ease-out;
-will-change:transform;
+}
+
+.avatar-wrapper{
+position:relative;
+display:inline-block;
+margin:0 auto;
 }
 
 .avatar{
@@ -100,7 +105,22 @@ object-fit:cover;
 border:3px solid white;
 cursor:pointer;
 display:block;
-margin:0 auto;
+}
+
+.founder-badge{
+position:absolute;
+top:-8px;
+left:-8px;
+background:#000;
+color:#fff;
+font-size:10px;
+font-weight:bold;
+padding:3px 10px;
+border-radius:12px;
+border:2px solid #fff;
+white-space:nowrap;
+z-index:2;
+box-shadow:0 0 8px rgba(255,255,255,0.3);
 }
 
 .btn{
@@ -131,7 +151,7 @@ border-radius:6px;
 #musicBtn{
 position:fixed;
 top:15px;
-right:15px;
+left:15px;
 z-index:9999;
 width:50px;
 height:50px;
@@ -171,7 +191,7 @@ border-radius:3px;
 <div id="stars"></div>
 <div id="cursor-glow"></div>
 
-<!-- ENTER BEREICH – CLICK TO ENTER riesig, sound on recommended klein -->
+<!-- ENTER BEREICH -->
 <div id="enter">
 <h1>CLICK TO ENTER</h1>
 <p>sound on recommended</p>
@@ -181,7 +201,7 @@ border-radius:3px;
 <source src="music.mp3" type="audio/mpeg">
 </audio>
 
-<!-- MUSIK BUTTON – nur Icon, größer -->
+<!-- MUSIK BUTTON – oben links -->
 <button id="musicBtn">
 <img id="musicIcon" src="https://cdn.discordapp.com/attachments/1506318533217226752/1519615974465343488/lautsprecher.png?ex=6a3e3429&is=6a3ce2a9&hm=c1937dd4ef02deddffdc477c4d1c2ef4d6c5f9ce6c55fa8a50dfb885566c9c45&">
 </button>
@@ -189,11 +209,13 @@ border-radius:3px;
 <div id="main">
 <h1 class="logo">COMBOSS FRIEND GROUP</h1>
 
-<!-- FAYYSI Card – ganze Card parallax -->
-<div class="card parallax-card">
+<!-- FAYYSI Card – NUR HIER das Founder Badge -->
+<div class="card">
+<div class="avatar-wrapper">
 <img class="avatar" src="https://cdn.discordapp.com/attachments/1506318533217226752/1519487604423262309/458ab107ae9770e16a9d3aca2e09bb6b_1.jpg?ex=6a3dbc9b&is=6a3c6b1b&hm=9ecc1040e809ecd93aa4d619417f24c1441b3c1dd244015fa6fa8b661b6bfb43&">
+<div class="founder-badge">FOUNDER</div>
+</div>
 <h2>FAYYSI</h2>
-<p style="color:#888;margin-bottom:10px;">Founder</p>
 <button class="btn" onclick="copyText('68rz')">
 <img class="icon" src="https://cdn.discordapp.com/attachments/1506318533217226752/1519486310283214914/logo.png?ex=6a3dbb67&is=6a3c69e7&hm=91663aaf63084ac9b8e32a4632362c44ba7115b8bf116a897e4a88f107e682e1&">
 Discord: 68rz
@@ -204,8 +226,8 @@ Roblox: Fayysi
 </button>
 </div>
 
-<!-- LAYYSI Card – auch parallax -->
-<div class="card parallax-card">
+<!-- LAYYSI Card – OHNE Founder Badge -->
+<div class="card">
 <h2>LAYYSI</h2>
 <p>sklave</p>
 <p>Später hinzufügen</p>
@@ -240,7 +262,7 @@ navigator.clipboard.writeText(text);
 alert("Kopiert: "+text);
 }
 
-// Musik Button – nur Icon umschalten
+// Musik Button
 musicBtn.onclick=()=>{
 if(music.paused){
 music.play();
@@ -251,7 +273,7 @@ musicIcon.src="https://cdn.discordapp.com/attachments/1506318533217226752/151961
 }
 };
 
-// BILDER ANKLICKBAR – öffnet Bild in neuem Tab
+// BILDER ANKLICKBAR
 document.addEventListener("click",(e)=>{
 if(e.target.classList.contains("avatar")){
 const src = e.target.src;
@@ -259,24 +281,6 @@ if(src){
 window.open(src, "_blank");
 }
 }
-});
-
-// PARALLAX-EFFEKT: Ganze Card bewegt sich mit der Maus
-document.querySelectorAll(".parallax-card").forEach(card=>{
-card.addEventListener("mousemove",(e)=>{
-const rect = card.getBoundingClientRect();
-const x = e.clientX - rect.left;
-const y = e.clientY - rect.top;
-const centerX = rect.width / 2;
-const centerY = rect.height / 2;
-const moveX = (x - centerX) / 15;
-const moveY = (y - centerY) / 15;
-card.style.transform = `translate(${moveX}px, ${moveY}px)`;
-});
-
-card.addEventListener("mouseleave",()=>{
-card.style.transform = "translate(0, 0)";
-});
 });
 </script>
 </body>
