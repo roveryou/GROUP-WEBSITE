@@ -1,193 +1,379 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FRIEND GROUP</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
-body{background:#000;color:#fff;overflow:hidden;}
-
-#navbar{position:fixed;top:0;left:0;width:100%;padding:15px 25px;background:rgba(0,0,0,.85);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;z-index:9998;}
-#navbar .logo{font-size:24px;text-shadow:0 0 15px white;cursor:pointer;transition:0.2s;}
-#navbar .logo:hover{text-shadow:0 0 30px white;}
-
-#snow-container,#snow-container-front{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;}
-#snow-container{z-index:1;}#snow-container-front{z-index:10;}
-.snowflake{position:absolute;top:-10px;color:white;font-size:1.2em;opacity:0.6;animation:fall linear infinite;pointer-events:none;user-select:none;}
-@keyframes fall{0%{transform:translateY(-30px) rotate(0deg);opacity:0.6;}100%{transform:translateY(110vh) rotate(360deg);opacity:0.2;}}
-
-#cursor-glow{position:fixed;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.08);filter:blur(60px);pointer-events:none;transform:translate(-50%,-50%);z-index:2;}
-
-#enter{position:fixed;inset:0;background:#000;display:flex;flex-direction:column;justify-content:center;align-items:center;cursor:pointer;z-index:9999;}
-#enter h1{font-size:clamp(40px,12vw,100px);text-shadow:0 0 20px white;text-align:center;padding:0 20px;}
-#enter p{font-size:clamp(12px,3vw,20px);margin-top:15px;color:#aaa;text-align:center;}
-
-#main{display:none;height:100vh;overflow:auto;padding:80px 25px 25px;text-align:center;position:relative;z-index:3;}
-.cards-container{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:30px;max-width:1400px;margin:20px auto;padding:0 20px;}
-
-.card{flex:1 1 380px;max-width:450px;min-width:320px;padding:30px;border-radius:25px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);backdrop-filter:blur(15px);transition:0.3s ease;position:relative;z-index:5;}
-.card:hover{box-shadow:0 0 30px rgba(255,255,255,0.15);background:rgba(255,255,255,.1);transform:translateY(-3px);}
-.profile-header{display:flex;align-items:flex-start;gap:20px;margin-bottom:15px;}
-
-.avatar-wrapper{
-  position:relative;
-  flex-shrink:0;
-  z-index:15;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:8px;
-}
-.avatar{
-  width:120px;
-  height:120px;
-  border-radius:50%;
-  object-fit:cover;
-  border:3px solid white;
-  cursor:pointer;
-  display:block;
-}
-.founder-badge{
-  position:absolute;
-  top:-15px;
-  left:-8px;
-  background:#000;
-  color:#fff;
-  font-size:10px;
-  font-weight:bold;
-  padding:3px 10px;
-  border-radius:12px;
-  border:2px solid #000;
-  white-space:nowrap;
-  z-index:20;
-}
-.avatar-name{
-  font-size:18px;
-  font-weight:bold;
-  color:white;
-  text-align:center;
-  width:100%;
-}
-.avatar-status{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:6px;
-  font-size:12px;
-  padding:4px 10px;
-  border-radius:14px;
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.1);
-  width:100%;
-}
-.avatar-status-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-.avatar-status-dot.online{background:#43b581;box-shadow:0 0 8px #43b581;}
-.avatar-status-dot.idle{background:#faa61a;box-shadow:0 0 8px #faa61a;}
-.avatar-status-dot.dnd{background:#f04747;box-shadow:0 0 8px #f04747;}
-.avatar-status-dot.offline{background:#747f8d;}
-.avatar-activity{
-  font-size:11px;
-  color:#ccc;
-  padding:4px 10px;
-  border-radius:8px;
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.06);
-  width:100%;
-  text-align:center;
-  line-height:1.4;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Inter,sans-serif;
 }
 
-.avatar-socials{
-  display:flex;
-  gap:6px;
-  margin-top:4px;
-  width:auto;
-}
-.avatar-social-btn{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:6px;
-  padding:8px 12px;
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.15);
-  border-radius:8px;
-  cursor:pointer;
-  transition:0.2s;
-  font-size:14px;
-  color:white;
-  white-space:nowrap;
-}
-.avatar-social-btn:hover{
-  background:rgba(255,255,255,.15);
-  border-color:white;
-  box-shadow:0 0 10px rgba(255,255,255,0.2);
-}
-.avatar-social-btn img{width:18px;height:18px;display:block;flex-shrink:0;}
-.avatar-social-btn i{font-size:18px;color:white;flex-shrink:0;}
-
-.profile-info{flex:1;text-align:left;position:relative;z-index:15;display:none;}
-
-@media(max-width:768px){
-#navbar .logo{font-size:18px;}
-#main{padding:70px 15px 15px;}
-.cards-container{flex-direction:column;align-items:center;gap:20px;padding:0;}
-.card{flex:unset;width:100%;max-width:400px;min-width:unset;padding:20px;}
-.profile-header{flex-direction:column;align-items:center;gap:12px;}
-.avatar{width:100px;height:100px;}
-.avatar-name{font-size:16px;}
-.avatar-status{font-size:11px;padding:3px 8px;}
-.avatar-activity{font-size:10px;}
-.avatar-social-btn{padding:6px 8px;font-size:12px;}
-.avatar-social-btn img{width:15px;height:15px;}
-.avatar-social-btn i{font-size:15px;}
+html,body{
+    background:#000;
+    color:#fff;
+    min-height:100vh;
+    overflow-x:hidden;
+    scroll-behavior:smooth;
 }
 
-#musicBtn{
-  position:fixed;
-  top:10px;
-  left:15px;
-  z-index:10000;
-  width:40px;
-  height:40px;
-  padding:0;
-  background:transparent;
-  color:white;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  outline:none;
+.bg{
+    position:fixed;
+    inset:0;
+    z-index:-3;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,.08), transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(255,255,255,.05), transparent 45%),
+        #000;
 }
-#musicBtn img{width:28px;height:28px;border-radius:4px;}
 
-#main::-webkit-scrollbar{width:6px;}
-#main::-webkit-scrollbar-track{background:transparent;}
-#main::-webkit-scrollbar-thumb{background:rgba(255,255,255,.3);border-radius:3px;}
+.lightning{
+    position:fixed;
+    inset:0;
+    background:#fff;
+    opacity:0;
+    pointer-events:none;
+    z-index:-1;
+    mix-blend-mode:screen;
+    animation: flash 9s infinite;
+}
+@keyframes flash{
+    0%, 92%, 100% { opacity:0; }
+    93% { opacity:.35; }
+    94% { opacity:0; }
+    95% { opacity:.6; }
+    96% { opacity:.1; }
+    97% { opacity:.45; }
+    98% { opacity:0; }
+}
+
+.grid-layer{
+    position:fixed;
+    inset:0;
+    z-index:-2;
+    background-image:
+        linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+    -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+    animation: gridMove 30s linear infinite;
+}
+@keyframes gridMove{
+    from{ background-position: 0 0, 0 0; }
+    to{ background-position: 60px 60px, 60px 60px; }
+}
+
+.particles{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    pointer-events:none;
+    overflow:hidden;
+}
+
+#enter{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.96);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    z-index:99999;
+    cursor:pointer;
+    transition:opacity .8s ease;
+}
+#enter h1{
+    color:#fff;
+    letter-spacing:8px;
+    font-size:1.6rem;
+    font-weight:700;
+    animation: pulse 2s infinite;
+}
+#enter p{
+    margin-top:14px;
+    color:rgba(255,255,255,.4);
+    letter-spacing:4px;
+    font-size:.75rem;
+}
+@keyframes pulse{
+    0%,100%{ opacity:1; text-shadow:0 0 15px rgba(255,255,255,.6); }
+    50%{ opacity:.55; text-shadow:0 0 30px rgba(255,255,255,.9); }
+}
+
+.blurred{
+    filter:blur(20px);
+    pointer-events:none;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+    padding:80px 20px 60px;
+    text-align:center;
+    position:relative;
+    z-index:1;
+}
+
+.title{
+    font-size:clamp(2.5rem, 7vw, 5rem);
+    font-weight:900;
+    letter-spacing:12px;
+    color:#fff;
+    text-shadow:
+        0 0 20px rgba(255,255,255,.4),
+        0 0 40px rgba(255,255,255,.2);
+    animation: titleGlow 4s ease-in-out infinite;
+    margin-bottom:20px;
+}
+@keyframes titleGlow{
+    0%,100%{ text-shadow: 0 0 20px rgba(255,255,255,.4), 0 0 40px rgba(255,255,255,.2); }
+    50%{ text-shadow: 0 0 30px rgba(255,255,255,.7), 0 0 60px rgba(255,255,255,.35); }
+}
+
+.card{
+    background:rgba(255,255,255,.025);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:18px;
+    padding:24px;
+    margin-top:22px;
+    text-align:left;
+    transition:all .4s cubic-bezier(.2,.8,.2,1);
+    backdrop-filter: blur(10px);
+    position:relative;
+    overflow:hidden;
+}
+.card::before{
+    content:"";
+    position:absolute;
+    top:0; left:-100%;
+    width:100%; height:100%;
+    background:linear-gradient(90deg, transparent, rgba(255,255,255,.06), transparent);
+    transition:left .8s;
+}
+.card:hover::before{
+    left:100%;
+}
+.card:hover{
+    transform:translateY(-6px);
+    border-color:rgba(255,255,255,.3);
+    box-shadow:0 20px 40px rgba(0,0,0,.6), 0 0 30px rgba(255,255,255,.05);
+}
+
+.profile{
+    display:flex;
+    align-items:center;
+    gap:22px;
+}
+.pfp{
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    object-fit:cover;
+    border:2px solid rgba(255,255,255,.5);
+    box-shadow:0 0 20px rgba(255,255,255,.15);
+    transition:.4s;
+    background:#111;
+    flex-shrink:0;
+    cursor:pointer;
+}
+.profile:hover .pfp{
+    transform:scale(1.08) rotate(-3deg);
+    border-color:#fff;
+    box-shadow:0 0 30px rgba(255,255,255,.5);
+}
+.info{ flex:1; min-width:0; }
+.info h2{
+    color:#fff;
+    margin-bottom:12px;
+    letter-spacing:4px;
+    font-weight:700;
+    font-size:1.05rem;
+}
+
+.socials{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+.social-btn{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 14px;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:10px;
+    cursor:pointer;
+    transition:all .25s;
+    color:#fff;
+    font-size:.82rem;
+    font-weight:500;
+    user-select:none;
+}
+.social-btn i{ font-size:1rem; }
+.social-btn img{width:16px;height:16px;display:block;flex-shrink:0;}
+.social-btn:hover{
+    background:#fff;
+    color:#000;
+    transform:translateY(-2px);
+    box-shadow:0 8px 20px rgba(255,255,255,.15);
+}
+
+.audio-toggle{
+    position:fixed;
+    top:20px;
+    right:20px;
+    width:46px;
+    height:46px;
+    border-radius:50%;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.15);
+    color:#fff;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:9998;
+    transition:.3s;
+    backdrop-filter:blur(8px);
+}
+.audio-toggle:hover{
+    background:#fff;
+    color:#000;
+}
+
+#toast{
+    position:fixed;
+    bottom:30px;
+    left:50%;
+    transform:translateX(-50%) translateY(20px);
+    background:#fff;
+    color:#000;
+    border:1px solid rgba(0,0,0,.1);
+    padding:12px 20px;
+    border-radius:12px;
+    opacity:0;
+    transition:.3s;
+    font-weight:600;
+    letter-spacing:1px;
+    font-size:.85rem;
+    z-index:9999;
+    box-shadow:0 10px 30px rgba(0,0,0,.5);
+}
+#toast.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+}
+
+.footer{
+    margin-top:60px;
+    color:rgba(255,255,255,.25);
+    font-size:.7rem;
+    letter-spacing:4px;
+}
+
+@media (max-width: 600px){
+    .profile{ flex-direction:column; text-align:center; gap:14px; }
+    .socials{ justify-content:center; }
+    .title{ letter-spacing:6px; }
+}
+
+.image-modal{
+    position:fixed;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(0,0,0,.92);
+    opacity:0;
+    visibility:hidden;
+    transition:opacity .25s ease, visibility .25s ease;
+    z-index:100000;
+}
+.image-modal.show{
+    opacity:1;
+    visibility:visible;
+}
+.modal-image{
+    max-width:90vw;
+    max-height:90vh;
+    border-radius:18px;
+    border:1px solid rgba(255,255,255,.15);
+    box-shadow:0 0 60px rgba(0,0,0,.8);
+    transition:box-shadow .3s ease, transform .3s ease;
+}
+.image-modal.show .modal-image{
+    box-shadow:0 0 35px rgba(255,255,255,.9), 0 0 85px rgba(255,255,255,.5), inset 0 0 40px rgba(255,255,255,.16);
+    transform:scale(1.02);
+}
+
+.status-dot{
+    display:inline-block;
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    margin-right:6px;
+    vertical-align:middle;
+}
+.status-dot.online{background:#43b581;box-shadow:0 0 6px #43b581;}
+.status-dot.idle{background:#faa61a;box-shadow:0 0 6px #faa61a;}
+.status-dot.dnd{background:#f04747;box-shadow:0 0 6px #f04747;}
+.status-dot.offline{background:#747f8d;}
+.status-text{font-size:.7rem;color:rgba(255,255,255,.4);margin-left:2px;}
+
+.activity-text{
+    font-size:.65rem;
+    color:rgba(255,255,255,.3);
+    margin-top:6px;
+    line-height:1.3;
+}
 </style>
 </head>
+
 <body>
 
-<div id="snow-container"></div>
-<div id="snow-container-front"></div>
-<div id="cursor-glow"></div>
+<div id="enter">
+    <h1>CLICK TO ENTER</h1>
+    <p>sound on recommended</p>
+</div>
 
-<div id="enter"><h1>CLICK TO ENTER</h1><p>sound on recommended</p></div>
+<div id="site" class="blurred">
+
+<div class="bg"></div>
+<div class="grid-layer"></div>
+<div class="particles" id="particles"></div>
+<div class="lightning"></div>
+
+<button class="audio-toggle" id="audioToggle" title="Toggle music">
+    <i class="fa-solid fa-volume-high"></i>
+</button>
+
+<div class="container">
+    <div class="title">FRIEND GROUP</div>
+    <div id="cardsContainer"></div>
+    <div class="footer">© FRIEND GROUP</div>
+</div>
+</div>
+
+<div id="toast">Copied</div>
+<div id="imageModal" class="image-modal" aria-hidden="true">
+    <img id="modalImage" class="modal-image" src="" alt="Profile image">
+</div>
 
 <audio id="music" loop preload="auto"></audio>
 
-<button id="musicBtn"><img id="musicIcon" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/spotify.svg" style="filter:invert(1);width:28px;height:28px;"></button>
-
-<div id="navbar"><div class="logo" onclick="document.getElementById('main').scrollTo({top:0,behavior:'smooth'})">FRIEND GROUP</div></div>
-
-<div id="main"><div class="cards-container"></div></div>
-
 <script>
 // ============================================================
-// >>> NEUE FREUNDE HINZUFÜGEN <<<
+// >>> DEINE PROFILES - HIER KANNST DU FREUNDE HINZUFÜGEN <<<
 // ============================================================
 const PROFILES = [
   {userId:"629800496479076352",name:"FAYYSI",avatar:"https://cdn.discordapp.com/attachments/1506318533217226752/1519487604423262309/458ab107ae9770e16a9d3aca2e09bb6b_1.jpg?ex=6a3dbc9b&is=6a3c6b1b&hm=9ecc1040e809ecd93aa4d619417f24c1441b3c1dd244015fa6fa8b661b6bfb43&",isFounder:true,telegram:"https://t.me/FAYYSI",telegramUser:"not",discord:{tag:"68rz",label:"Discord"},roblox:{tag:"Fayysi",label:"Roblox"}},
@@ -195,95 +381,175 @@ const PROFILES = [
   {userId:"1519379611648131109",name:"rootkit",avatar:"https://cdn.discordapp.com/attachments/1519724814951252281/1519782023722696844/fdd701338be26f2d6ad979f0914d2e95.jpg?ex=6a3ecece&is=6a3d7d4e&hm=717d25a514f9f01ead42408c6d095234a924d43ff5e618ee71679c238da31b50",isFounder:false,telegram:"https://t.me/rootkit",telegramUser:"@rootkit",discord:{tag:"solanaaddy",label:"Discord"},roblox:{tag:"not",label:"Roblox"}},
   {userId:"1480561930300166196",name:"celine",avatar:"https://cdn.discordapp.com/avatars/1480561930300166196/198b86d8b1e90e0981b800b077dc51d3.png?size=512",isFounder:false,telegram:"https://t.me/dima1378",telegramUser:"@dima1378",discord:{tag:"pureliebe",label:"Discord"},roblox:{tag:"pureliebe67",label:"Roblox"}},
   {userId:"1374039339306320023",name:"𝒮𝒶𝒻𝒾𝓇𝒶",avatar:"https://cdn.discordapp.com/avatars/1374039339306320023/860ea73149909be0fd0abf32f92e6121.png?size=512",isFounder:false,telegram:"https://t.me/",telegramUser:"@",discord:{tag:"4…",label:"Discord"},roblox:{tag:"lightyagamifarmimg",label:"Roblox"}},
-  ];
+];
+
+// ============================================================
+// >>> DEINE MUSIK - DIREKTER DOWNLOAD-LINK <<<
+// ============================================================
+const MUSIC_URL = "https://cdn.discordapp.com/attachments/1511109621908115657/1520396399370571816/ytmp3free.cc_forever-young-x-xxxtentacion-mashup-youtubemp3free.org.mp3?ex=6a410afd&is=6a3fb97d&hm=e4e0bd0d0a6a370e2f3deae7606a7dc79543460cfdb5f1e3155338b931337a5e&";
+
+// Roblox Icon
+const ROBLOX_ICON = "https://cdn.discordapp.com/attachments/1506318533217226752/1519693248766152755/CITYPNG.COMHD_Roblox_White_Symbol_Sign_Icon_Logo_PNG_-_2000x2000.png?ex=6a407661&is=6a3f24e1&hm=90a6f72b939e4cabd356fb4e15b8f51cf435aa98796410244f46626ba9279acb";
 
 // ============ AB HIER NICHTS MEHR ÄNDERN ============
+
 (function(){
-localStorage.setItem('profiles', JSON.stringify(PROFILES));
-const c = document.querySelector('.cards-container');
-c.innerHTML = PROFILES.map(p => {
-const b = p.isFounder ? '<div class="founder-badge">FOUNDER</div>' : '';
-const tgLink = p.telegram ? p.telegram : '#';
-const tgUser = p.telegramUser ? p.telegramUser : 'Telegram';
-return `<div class="card" data-userid="${p.userId}"><div class="profile-header"><div class="avatar-wrapper"><img class="avatar" id="av-${p.userId}" src="${p.avatar}">${b}<div class="avatar-name">${p.name}</div><div class="avatar-status" id="ast-${p.userId}"><div class="avatar-status-dot offline" id="adot-${p.userId}"></div><span id="atx-${p.userId}">Lade Status...</span></div><div class="avatar-activity" id="aac-${p.userId}" style="display:none;"></div><div class="avatar-socials"><div class="avatar-social-btn" onclick="navigator.clipboard.writeText('${p.discord.tag}');alert('Kopiert: ${p.discord.tag}')"><i class="fa-brands fa-discord"></i> ${p.discord.tag}</div><div class="avatar-social-btn" onclick="navigator.clipboard.writeText('${p.roblox.tag}');alert('Kopiert: ${p.roblox.tag}')"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/roblox.svg" style="filter:invert(1);width:18px;height:18px;"> ${p.roblox.tag}</div><div class="avatar-social-btn" onclick="window.open('${tgLink}','_blank')"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg" style="filter:invert(1);width:18px;height:18px;"> ${tgUser}</div></div></div></div></div>`;
+const container = document.getElementById('cardsContainer');
+container.innerHTML = PROFILES.map(p => {
+const founderBadge = p.isFounder ? '<span style="position:absolute;top:10px;right:10px;font-size:.65rem;opacity:.4;">Founder</span>' : '';
+const tgLink = p.telegram || '#';
+const tgUser = p.telegramUser || 'Telegram';
+return `<div class="card profile" data-userid="${p.userId}">
+    ${founderBadge}
+    <img class="pfp" id="av-${p.userId}" src="${p.avatar}" onerror="this.src='https://via.placeholder.com/90/111/fff?text=${p.name.charAt(0)}'">
+    <div class="info">
+        <h2>${p.name} <span class="status-text" id="stx-${p.userId}"><span class="status-dot offline" id="sdot-${p.userId}"></span><span id="stxt-${p.userId}">Lade...</span></span></h2>
+        <div class="activity-text" id="act-${p.userId}" style="display:none;"></div>
+        <div class="socials">
+            <div class="social-btn" onclick="navigator.clipboard.writeText('${p.discord.tag}');showToast('Kopiert: ${p.discord.tag}')">
+                <i class="fa-brands fa-discord"></i><span>${p.discord.tag}</span>
+            </div>
+            <div class="social-btn" onclick="navigator.clipboard.writeText('${p.roblox.tag}');showToast('Kopiert: ${p.roblox.tag}')">
+                <img src="${ROBLOX_ICON}" style="filter:brightness(0) invert(1);width:16px;height:16px;" onerror="this.style.display='none'"><span>${p.roblox.tag}</span>
+            </div>
+            <div class="social-btn" onclick="window.open('${tgLink}','_blank')">
+                <i class="fa-brands fa-telegram"></i><span>${tgUser}</span>
+            </div>
+        </div>
+    </div>
+</div>`;
 }).join('');
 
+// Lanyard Status
 const ids = PROFILES.map(p => p.userId);
 
-function update(id){
-const adot=document.getElementById(`adot-${id}`),atx=document.getElementById(`atx-${id}`),aac=document.getElementById(`aac-${id}`),av=document.getElementById(`av-${id}`);
-if(!adot||!atx||!aac)return;
-fetch(`https://api.lanyard.rest/v1/users/${id}`).then(r=>r.json()).then(d=>{
-if(!d.success){atx.textContent="Unsichtbar";adot.className="avatar-status-dot offline";return;}
-const s=d.data.discord_status||"offline";
-adot.className="avatar-status-dot";
-if(s==="online"){adot.classList.add("online");atx.textContent="Online";}
-else if(s==="idle"){adot.classList.add("idle");atx.textContent="Abwesend";}
-else if(s==="dnd"){adot.classList.add("dnd");atx.textContent="Bitte nicht stören";}
-else{adot.classList.add("offline");atx.textContent="Unsichtbar";}
-if(d.data.discord_user&&d.data.discord_user.avatar){const h=d.data.discord_user.avatar,ex=h.startsWith("a_")?"gif":"png";if(av)av.src=`https://cdn.discordapp.com/avatars/${id}/${h}.${ex}?size=128`;}
-const acts=d.data.activities||[];let f=null;for(const a of acts){if(a.type!==4){f=a;break;}}
-if(f){let h="";if(f.type===0){h=`${f.name}`;if(f.details)h+=`<br><span style="font-size:10px;color:#999;">${f.details}</span>`;if(f.state)h+=`<br><span style="font-size:10px;color:#999;">${f.state}</span>`;}else if(f.type===2){h=`${f.details||"Musik"}<br><span style="font-size:10px;color:#999;">${f.state||""}</span>`;}else if(f.type===3){h=`${f.name}`;}else{h=f.name;}aac.innerHTML=h;aac.style.display="block";}else{aac.style.display="none";}
-}).catch(()=>{atx.textContent="Unsichtbar";adot.className="avatar-status-dot offline";});
+function updateStatus(id){
+const sdot = document.getElementById(`sdot-${id}`);
+const stxt = document.getElementById(`stxt-${id}`);
+const act = document.getElementById(`act-${id}`);
+const av = document.getElementById(`av-${id}`);
+if(!sdot||!stxt)return;
+
+fetch(`https://api.lanyard.rest/v1/users/${id}`)
+.then(r=>r.json()).then(d=>{
+if(!d.success){
+stxt.textContent = "Offline";
+sdot.className = "status-dot offline";
+return;
 }
-ids.forEach(id=>update(id));
-setInterval(()=>ids.forEach(id=>update(id)),30000);
+const s = d.data.discord_status || "offline";
+sdot.className = "status-dot";
+if(s==="online"){sdot.classList.add("online");stxt.textContent="Online";}
+else if(s==="idle"){sdot.classList.add("idle");stxt.textContent="Abwesend";}
+else if(s==="dnd"){sdot.classList.add("dnd");stxt.textContent="Bitte nicht stören";}
+else{sdot.classList.add("offline");stxt.textContent="Unsichtbar";}
 
-[document.getElementById('snow-container'),document.getElementById('snow-container-front')].forEach(cn=>{
-const f=['❄','❅','❆','✦','•'];
-for(let i=0;i<40;i++){const e=document.createElement('div');e.className='snowflake';e.textContent=f[Math.floor(Math.random()*f.length)];e.style.left=Math.random()*100+'%';e.style.fontSize=(Math.random()*1.5+0.5)+'em';e.style.opacity=Math.random()*0.5+0.3;e.style.animationDuration=(Math.random()*8+5)+'s';e.style.animationDelay=(Math.random()*10)+'s';cn.appendChild(e);}
+if(d.data.discord_user&&d.data.discord_user.avatar){
+const h=d.data.discord_user.avatar;
+const ex=h.startsWith("a_")?"gif":"png";
+if(av)av.src=`https://cdn.discordapp.com/avatars/${id}/${h}.${ex}?size=128`;
+}
+
+const acts = d.data.activities||[];
+let f = null;
+for(const a of acts){if(a.type!==4){f=a;break;}}
+if(f){
+let h = "";
+if(f.type===0){h=`${f.name}`;if(f.details)h+=`<br><span style="font-size:10px;opacity:.6;">${f.details}</span>`;if(f.state)h+=`<br><span style="font-size:10px;opacity:.6;">${f.state}</span>`;}
+else if(f.type===2){h=`${f.details||"Musik"}<br><span style="font-size:10px;opacity:.6;">${f.state||""}</span>`;}
+else{h=f.name;}
+act.innerHTML=h;act.style.display="block";
+} else {act.style.display="none";}
+}).catch(()=>{
+stxt.textContent = "Offline";
+sdot.className = "status-dot offline";
 });
+}
 
-// ============================================================
-// MUSIK-SYSTEM – versucht zuerst deine music.mp3, dann Fallback
-// ============================================================
+ids.forEach(id=>updateStatus(id));
+setInterval(()=>ids.forEach(id=>updateStatus(id)),30000);
+
+// ===== MUSIK MIT DEINEM SONG =====
 const music = document.getElementById('music');
-const musicIcon = document.getElementById('musicIcon');
-const ICON_URL = 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/spotify.svg';
+const audioToggle = document.getElementById('audioToggle');
+let isPlaying = false;
 
-// 1. Versuche deine lokale music.mp3 zu laden
-music.src = 'music.mp3';
+// Deine Musik von tmpfiles
+music.src = MUSIC_URL;
 
-// 2. Wenn das fehlschlägt, nimm den Internet-Fallback
-music.addEventListener('error', function() {
-  console.log('music.mp3 nicht ladbar, wechsle zu Backup-Quelle...');
-  music.src = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
-  music.load();
+// Enter klicken
+document.getElementById("enter").onclick = () => {
+document.getElementById("site").classList.remove("blurred");
+const enter = document.getElementById("enter");
+enter.style.opacity = "0";
+setTimeout(()=>enter.style.display="none",700);
+music.volume = 0.4;
+music.play().then(()=>{
+isPlaying = true;
+audioToggle.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+}).catch(() => {
+console.log("Autoplay blockiert – klick auf Lautsprecher");
+});
+};
+
+// Lautsprecher-Button
+audioToggle.onclick = () => {
+if(isPlaying){
+music.pause();
+audioToggle.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
+} else {
+music.play().catch(()=>{
+// Falls Fehler, nochmal versuchen
+music.src = MUSIC_URL;
+music.load();
+music.play().catch(()=>{});
+});
+audioToggle.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+}
+isPlaying = !isPlaying;
+};
+
+// ===== PARTICLES =====
+const particlesEl = document.getElementById("particles");
+for(let i=0; i<60; i++){
+const p = document.createElement("div");
+p.className = "particle";
+p.style.left = Math.random()*100 + "vw";
+p.style.animationDuration = (4 + Math.random()*8) + "s";
+p.style.animationDelay = (Math.random()*8) + "s";
+p.style.opacity = (0.2 + Math.random()*0.6).toString();
+p.style.width = p.style.height = (1 + Math.random()*2) + "px";
+particlesEl.appendChild(p);
+}
+
+// ===== IMAGE MODAL =====
+const imageModal = document.getElementById("imageModal");
+const modalImage = document.getElementById("modalImage");
+
+document.querySelectorAll(".pfp").forEach(img=>{
+img.addEventListener("click", ()=>{
+modalImage.src = img.src;
+imageModal.classList.add("show");
+});
 });
 
-// Gespeicherten Status wiederherstellen
-musicIcon.src = ICON_URL;
+imageModal.addEventListener("click", (e)=>{
+if(e.target === imageModal) imageModal.classList.remove("show");
+});
 
-// Enter-Button
-document.getElementById("enter").onclick = () => {
-  document.getElementById("enter").style.display = "none";
-  document.getElementById("main").style.display = "block";
-  music.play().catch(function(e) {
-    console.log('Autoplay blockiert, Klick notwendig:', e);
-  });
-  musicIcon.src = ICON_URL;
-  localStorage.setItem('musicState', 'playing');
+document.addEventListener("keydown", (e)=>{
+if(e.key === "Escape") imageModal.classList.remove("show");
+});
+
+window.showToast = function(msg){
+const t = document.getElementById("toast");
+t.innerText = msg;
+t.classList.add("show");
+clearTimeout(window._toastT);
+window._toastT = setTimeout(()=>t.classList.remove("show"),2000);
 };
 
-// Musik-Button Toggle (An/Aus)
-document.getElementById("musicBtn").onclick = () => {
-  if (music.paused) {
-    music.play().catch(function(e) {
-      console.log('Fehler beim Abspielen:', e);
-    });
-    musicIcon.src = ICON_URL;
-    localStorage.setItem('musicState', 'playing');
-  } else {
-    music.pause();
-    musicIcon.src = ICON_URL;
-    localStorage.setItem('musicState', 'paused');
-  }
-};
 })();
-
-document.addEventListener("mousemove",e=>{document.getElementById("cursor-glow").style.left=e.clientX+"px";document.getElementById("cursor-glow").style.top=e.clientY+"px";});
-document.addEventListener("click",e=>{if(e.target.classList.contains("avatar")&&e.target.src)window.open(e.target.src,"_blank");});
 </script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </body>
 </html>
