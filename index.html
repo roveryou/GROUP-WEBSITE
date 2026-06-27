@@ -242,10 +242,16 @@ html,body{
 .info{ flex:1; min-width:0; }
 .info h2{
     color:#fff;
-    margin-bottom:12px;
+    margin-bottom:6px;
     letter-spacing:4px;
     font-weight:700;
     font-size:1.05rem;
+}
+
+/* Status separat unter dem Namen */
+.status-row{
+    display:block;
+    margin-top:2px;
 }
 
 .socials{
@@ -337,7 +343,7 @@ html,body{
 }
 
 @media (max-width: 600px){
-    .card-flipper{ min-height:180px; }
+    .card-flipper{ min-height:200px; }
 
     .card-face{
         text-align:center;
@@ -346,7 +352,23 @@ html,body{
     .card-front .profile{
         flex-direction:column;
         text-align:center;
-        gap:12px;
+        gap:10px;
+    }
+
+    .card-front .info{
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+    }
+
+    .card-front .info h2{
+        margin-bottom:2px;
+        text-align:center;
+    }
+
+    .status-row{
+        text-align:center;
+        margin-top:4px;
     }
 
     .card-back .socials{
@@ -355,10 +377,6 @@ html,body{
     }
 
     .title{ letter-spacing:6px; }
-
-    .info h2{
-        margin-bottom:8px;
-    }
 }
 
 /* ===== IMAGE MODAL ===== */
@@ -481,7 +499,7 @@ const PROFILES = [
     avatar: "https://cdn.discordapp.com/avatars/1319734715858550835/fda97d7ec9325b6e907b12c08a616328.png?size=512",
     isFounder: false,
     discord: { enabled: true, tag: "7e9p" },
-    telegram: { enabled: false, url: "https://t.me/Layysi", username: "@Layysi" },
+    telegram: { enabled: true, url: "https://t.me/Layysi", username: "@Layysi" },
     roblox: { enabled: true, tag: "Layysi" }
   },
   {
@@ -567,7 +585,8 @@ container.innerHTML = PROFILES.map(p => {
                 <div class="profile">
                     <img class="pfp" id="av-${p.userId}" src="${p.avatar}" onerror="this.src='https://via.placeholder.com/90/111/fff?text=${p.name.charAt(0)}'" alt="${p.name}">
                     <div class="info">
-                        <h2>${p.name} <span class="status-text" id="stx-${p.userId}"><span class="status-dot offline" id="sdot-${p.userId}"></span><span id="stxt-${p.userId}">Lade...</span></span></h2>
+                        <h2>${p.name}</h2>
+                        <span class="status-row status-text" id="stx-${p.userId}"><span class="status-dot offline" id="sdot-${p.userId}"></span><span id="stxt-${p.userId}">Lade...</span></span>
                         <div class="activity-text" id="act-${p.userId}" style="display:none;"></div>
                     </div>
                 </div>
@@ -582,7 +601,7 @@ container.innerHTML = PROFILES.map(p => {
 }).join('');
 
 // ===== INTERAKTIONS-LOGIK =====
-// 1) Klick auf PFP = Bild-Modal öffnen (wie im alten Script)
+// 1) Klick auf PFP = Bild-Modal öffnen
 // 2) Klick auf die Karte (nicht auf PFP, nicht auf Social-Buttons) = Flip
 
 document.querySelectorAll('.card-container').forEach(container => {
@@ -598,7 +617,7 @@ document.querySelectorAll('.card-container').forEach(container => {
             return;
         }
 
-        // Wenn auf einen Social-Button geklickt wurde → nichts tun (die Buttons haben eigene onclick)
+        // Wenn auf einen Social-Button geklickt wurde → nichts tun
         if (e.target.closest('.social-btn')) return;
 
         // Sonst → Flip
