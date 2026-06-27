@@ -182,7 +182,7 @@ body{background:#000;color:#fff;overflow:hidden;}
 
 <audio id="music" loop><source src="music.mp3" type="audio/mpeg"></audio>
 
-<button id="musicBtn"><img id="musicIcon" src="https://cdn.discordapp.com/attachments/1506318533217226752/1519769366911254539/speaker-256.png?ex=6a3ec305&is=6a3d7185&hm=2a08d6ecb3ac5698e7d3e404c2aca7b5d299e82927337eeda6b61eed649686ed"></button>
+<button id="musicBtn"><img id="musicIcon" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/spotify.svg" style="filter:invert(1);width:28px;height:28px;"></button>
 
 <div id="navbar"><div class="logo" onclick="document.getElementById('main').scrollTo({top:0,behavior:'smooth'})">FRIEND GROUP</div></div>
 
@@ -208,7 +208,7 @@ c.innerHTML = PROFILES.map(p => {
 const b = p.isFounder ? '<div class="founder-badge">FOUNDER</div>' : '';
 const tgLink = p.telegram ? p.telegram : '#';
 const tgUser = p.telegramUser ? p.telegramUser : 'Telegram';
-return `<div class="card" data-userid="${p.userId}"><div class="profile-header"><div class="avatar-wrapper"><img class="avatar" id="av-${p.userId}" src="${p.avatar}">${b}<div class="avatar-name">${p.name}</div><div class="avatar-status" id="ast-${p.userId}"><div class="avatar-status-dot offline" id="adot-${p.userId}"></div><span id="atx-${p.userId}">Lade Status...</span></div><div class="avatar-activity" id="aac-${p.userId}" style="display:none;"></div><div class="avatar-socials"><div class="avatar-social-btn" onclick="navigator.clipboard.writeText('${p.discord.tag}');alert('Kopiert: ${p.discord.tag}')"><i class="fa-brands fa-discord"></i> ${p.discord.tag}</div><div class="avatar-social-btn" onclick="navigator.clipboard.writeText('${p.roblox.tag}');alert('Kopiert: ${p.roblox.tag}')"><img src="https://cdn.discordapp.com/attachments/1506318533217226752/1519693248766152755/CITYPNG.COMHD_Roblox_White_Symbol_Sign_Icon_Logo_PNG_-_2000x2000.png?ex=6a3e7c21&is=6a3d2aa1&hm=ade79ec58de6b9b7302e5badeaac318d0a9c6f7ecdab4f485975552f17747d1f"> ${p.roblox.tag}</div><div class="avatar-social-btn" onclick="window.open('${tgLink}','_blank')"><img src="https://cdn.discordapp.com/attachments/1519724814951252281/1519786289069818007/telegram-white-icon.png?ex=6a3ed2c7&is=6a3d8147&hm=391fdcb1e00d4bfa36297776f644acc76d127dfcfcbac350caf1516c5cb71b0f"> ${tgUser}</div></div></div></div></div>`;
+return `<div class="card" data-userid="${p.userId}"><div class="profile-header"><div class="avatar-wrapper"><img class="avatar" id="av-${p.userId}" src="${p.avatar}">${b}<div class="avatar-name">${p.name}</div><div class="avatar-status" id="ast-${p.userId}"><div class="avatar-status-dot offline" id="adot-${p.userId}"></div><span id="atx-${p.userId}">Lade Status...</span></div><div class="avatar-activity" id="aac-${p.userId}" style="display:none;"></div><div class="avatar-socials"><div class="avatar-social-btn" onclick="navigator.clipboard.writeText('${p.discord.tag}');alert('Kopiert: ${p.discord.tag}')"><i class="fa-brands fa-discord"></i> ${p.discord.tag}</div><div class="avatar-social-btn" onclick="navigator.clipboard.writeText('${p.roblox.tag}');alert('Kopiert: ${p.roblox.tag}')"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/roblox.svg" style="filter:invert(1);width:18px;height:18px;"> ${p.roblox.tag}</div><div class="avatar-social-btn" onclick="window.open('${tgLink}','_blank')"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg" style="filter:invert(1);width:18px;height:18px;"> ${tgUser}</div></div></div></div></div>`;
 }).join('');
 
 const ids = PROFILES.map(p => p.userId);
@@ -240,7 +240,7 @@ for(let i=0;i<40;i++){const e=document.createElement('div');e.className='snowfla
 // Musik-Status beim Laden wiederherstellen
 const savedState=localStorage.getItem('musicState');
 if(savedState==='paused'){
-  document.getElementById('musicIcon').src='https://cdn.discordapp.com/attachments/1506318533217226752/1519769366911254539/speaker-256.png?ex=6a3ec305&is=6a3d7185&hm=2a08d6ecb3ac5698e7d3e404c2aca7b5d299e82927337eeda6b61eed649686ed';
+  document.getElementById('musicIcon').src='https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/spotify.svg';
 }
 })();
 
@@ -249,20 +249,19 @@ document.getElementById("enter").onclick=()=>{
   document.getElementById("enter").style.display="none";
   document.getElementById("main").style.display="block";
   document.getElementById("music").play();
-  document.getElementById("musicIcon").src="https://cdn.discordapp.com/attachments/1506318533217226752/1519769366911254539/speaker-256.png?ex=6a3f6bc5&is=6a3e1a45&hm=bb612420695dfbe7764c570ab5245f4effa3688e9b496ef40dcede1272f014ee";
+  document.getElementById("musicIcon").src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/spotify.svg";
   localStorage.setItem('musicState','playing');
 };
 document.getElementById("musicBtn").onclick=()=>{
   const m=document.getElementById("music"),i=document.getElementById("musicIcon");
-  const onImg="https://cdn.discordapp.com/attachments/1506318533217226752/1519769366911254539/speaker-256.png?ex=6a3f6bc5&is=6a3e1a45&hm=bb612420695dfbe7764c570ab5245f4effa3688e9b496ef40dcede1272f014ee";
-  const offImg="https://cdn.discordapp.com/attachments/1506318533217226752/1519769366911254539/speaker-256.png?ex=6a3f6bc5&is=6a3e1a45&hm=bb612420695dfbe7764c570ab5245f4effa3688e9b496ef40dcede1272f014ee";
+  const iconUrl="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/spotify.svg";
   if(m.paused){
     m.play();
-    i.src=onImg;
+    i.src=iconUrl;
     localStorage.setItem('musicState','playing');
   } else {
     m.pause();
-    i.src=offImg;
+    i.src=iconUrl;
     localStorage.setItem('musicState','paused');
   }
 };
